@@ -141,22 +141,27 @@ public class Principal {
 					System.out.println("\nNão foi encontrado contato com este id...");
 
 				}else { // o contato existe
+					
+					System.out.println("Contato localizado: ");
+					System.out.println(busca.toString() + "\n");
 				
 					System.out.println("\n--- Menu de Alteração ---");
 					System.out.println("Informe o campo que deseja atualizar:");
 					System.out.println("1) Nome");
 					System.out.println("2) Fone");
 					System.out.println("3) E-mail");
+					System.out.println("0) Voltar ao menu principal");
 					System.out.print("Sua opção: ");
 					op3 = leitor.nextInt();
 					
-					while(op3 != 1 && op3 != 2 && op3 != 3) {
+					while(op3 < 0 || op3 > 3) {
 						System.out.println("\nOpção invlálida");
 						System.out.println("\n--- Menu de Alteração ---");
 						System.out.println("Informe o campo que deseja atualizar:");
 						System.out.println("1) Nome");
 						System.out.println("2) Fone");
 						System.out.println("3) E-mail");
+						System.out.println("0) Voltar ao menu principal");
 						System.out.print("Sua opção: ");
 						op3 = leitor.nextInt();
 					}
@@ -171,14 +176,17 @@ public class Principal {
 						System.out.println("\nNovo telefone: ");
 						busca.setFone(leitor.nextLine());
 						
-					}else{
+					}else if(op3 == 3){
 						System.out.println("\nNovo e-mail: ");
 						busca.setEmail(leitor.nextLine());
 					}
 					
-					dao.updateContato(busca, op3);
+					if(op3 != 0)
+					{
+						dao.updateContato(busca, op3);
 					
-					System.out.println("\nContato alterado com sucesso!");
+						System.out.println("\nContato alterado com sucesso!");
+					}
 				
 				}
 				
