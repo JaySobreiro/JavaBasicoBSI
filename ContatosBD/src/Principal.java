@@ -12,7 +12,7 @@ public class Principal {
 		System.out.println("Conectado com sucesso!\n");
 		conn.close();*/
 
-		int op, op2;
+		int op, op2, op3;
 		Scanner leitor = new Scanner(System.in);
 		ContatoDAO dao = new ContatoDAO();	
 		int id;
@@ -25,6 +25,7 @@ public class Principal {
 			System.out.println("2) Listar todos");
 			System.out.println("3) Buscar");
 			System.out.println("4) Excluir");
+			System.out.println("5) Alterar");
 			System.out.println("0) Sair");
 			System.out.print("Informe uma opção: ");
 			op = leitor.nextInt();
@@ -129,6 +130,60 @@ public class Principal {
 
 				break;
 
+			case 5: // alterar
+				
+				System.out.print("\nInforme o ID do contato que deseja atualizar: ");
+				id = leitor.nextInt();
+
+				busca = dao.getContato(id);
+
+				if(busca == null) { // o contato não existe
+					System.out.println("\nNão foi encontrado contato com este id...");
+
+				}else { // o contato existe
+				
+					System.out.println("\n--- Menu de Alteração ---");
+					System.out.println("Informe o campo que deseja atualizar:");
+					System.out.println("1) Nome");
+					System.out.println("2) Fone");
+					System.out.println("3) E-mail");
+					System.out.print("Sua opção: ");
+					op3 = leitor.nextInt();
+					
+					while(op3 != 1 && op3 != 2 && op3 != 3) {
+						System.out.println("\nOpção invlálida");
+						System.out.println("\n--- Menu de Alteração ---");
+						System.out.println("Informe o campo que deseja atualizar:");
+						System.out.println("1) Nome");
+						System.out.println("2) Fone");
+						System.out.println("3) E-mail");
+						System.out.print("Sua opção: ");
+						op3 = leitor.nextInt();
+					}
+					
+					leitor.nextLine();
+					
+					if(op3 == 1) {
+						System.out.println("\nNovo nome: ");
+						busca.setNome(leitor.nextLine());
+						
+					}else if(op3 == 2) {
+						System.out.println("\nNovo telefone: ");
+						busca.setFone(leitor.nextLine());
+						
+					}else{
+						System.out.println("\nNovo e-mail: ");
+						busca.setEmail(leitor.nextLine());
+					}
+					
+					dao.updateContato(busca, op3);
+					
+					System.out.println("\nContato alterado com sucesso!");
+				
+				}
+				
+				break;
+				
 			case 0: // sair
 
 				System.out.println("\nO sistema foi finalizado...");
