@@ -1,3 +1,4 @@
+import java.awt.print.Printable;
 import java.security.KeyStore.ProtectionParameter;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -130,6 +131,41 @@ public class ContatoDAO {// DAO = Data Access Object
 		}
 
 
+	}
+	
+	public void updateContato(Contato c, int op) {
+			
+		
+		try {
+			
+			String sql;
+			String valor;
+			
+			if(op == 1) {
+				sql = "UPDATE tb_contatos SET nome = ? WHERE id = ?";
+				valor = c.getNome();
+			}else if(op == 2) {
+				sql = "UPDATE tb_contatos SET fone = ? WHERE id = ?";
+				valor = c.getFone();
+			}else {
+				sql = "UPDATE tb_contatos SET email = ? WHERE id = ?";
+				valor = c.getEmail();
+			}
+			
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, valor);
+			stmt.setInt(2, c.getId());
+			
+			
+			stmt.execute();
+			stmt.close();			
+
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 }// fim da classe
